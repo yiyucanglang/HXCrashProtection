@@ -8,7 +8,7 @@
 
 #import "NSString+HXCPString.h"
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @implementation NSString (HXCPString)
 #pragma mark - Life Cycle
@@ -16,7 +16,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -34,7 +34,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -54,7 +54,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -74,7 +74,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -95,7 +95,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -116,7 +116,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -136,7 +136,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -157,7 +157,7 @@
                 }
                 @catch (NSException *exception) {
                     object = @"";
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;

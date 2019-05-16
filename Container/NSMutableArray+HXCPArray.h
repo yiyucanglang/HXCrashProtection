@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "HXCrashProtectionProtocol.h"
+#import "HXExceptionGuardProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 // 对于NSMutableArray ：
 //__NSArrayM
 
-@interface NSMutableArray (HXCPArray)<HXCrashProtectionProtocol>
+@interface NSMutableArray (HXCPArray)<HXExceptionGuardProtocol>
 
 @end
 

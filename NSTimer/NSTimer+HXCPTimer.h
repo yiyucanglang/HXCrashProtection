@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HXCrashProtectionProtocol.h"
+#import "HXExceptionGuardProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSTimer (HXCPTimer)<HXCrashProtectionProtocol>
+@interface NSTimer (HXCPTimer)<HXExceptionGuardProtocol>
 
 @end
 

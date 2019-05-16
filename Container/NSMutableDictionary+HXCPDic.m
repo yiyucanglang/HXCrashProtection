@@ -9,7 +9,7 @@
 #import "NSMutableDictionary+HXCPDic.h"
 
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @implementation NSMutableDictionary (HXCPDic)
 #pragma mark - Life Cycle
@@ -17,7 +17,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     
     
     static dispatch_once_t onceToken;
@@ -34,7 +34,7 @@
                     RSSWCallOriginal(object, key);
                 }
                 @catch (NSException *exception) {
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                 

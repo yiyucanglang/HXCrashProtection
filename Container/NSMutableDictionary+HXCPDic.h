@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HXCrashProtectionProtocol.h"
+#import "HXExceptionGuardProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 // 对于NSMutableDictionary: :
 // 一般用到的是 __NSDictionaryM
 
-@interface NSMutableDictionary (HXCPDic)<HXCrashProtectionProtocol>
+@interface NSMutableDictionary (HXCPDic)<HXExceptionGuardProtocol>
 
 @end
 

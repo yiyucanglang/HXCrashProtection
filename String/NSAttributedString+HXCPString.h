@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HXCrashProtectionProtocol.h"
+#import "HXExceptionGuardProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSAttributedString (HXCPString)<HXCrashProtectionProtocol>
+@interface NSAttributedString (HXCPString)<HXExceptionGuardProtocol>
 
 @end
 

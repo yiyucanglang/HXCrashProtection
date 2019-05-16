@@ -6,7 +6,7 @@
 //  Copyright © 2019 DaHuanXiong. All rights reserved.
 //
 
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 #import "NSArray+HXCPArray.h"
 #import "NSMutableArray+HXCPArray.h"
@@ -25,14 +25,14 @@
 
 #import "NSNotificationCenter+HXCPNotificationCenter.h"
 
-@implementation HXExceptionHandler
+@implementation HXExceptionGuarder
 
 #pragma mark - Life Cycle
-+ (instancetype)exceptionManager {
++ (instancetype)exceptionGuarder {
     static dispatch_once_t onceToken;
-    static HXExceptionHandler *manage = nil;
+    static HXExceptionGuarder *manage = nil;
     dispatch_once(&onceToken, ^{
-        manage = [[HXExceptionHandler alloc] init];
+        manage = [[HXExceptionGuarder alloc] init];
     });
     
     return manage;
@@ -48,7 +48,7 @@
     NSString *stackSymbolInfo = [callStackSymbolsArr componentsJoinedByString:@"\n"];//分隔符逗号
     NSString *customReason = [NSString stringWithFormat:@"%@ stackSymbolInfo:%@", exception.reason, stackSymbolInfo];
     
-    NSException *customException = [[NSException alloc] initWithName:exception.name reason:customReason userInfo:exception.userInfo];
+    NSException *customException = [[NSException alloc] initWithName:[NSString stringWithFormat:@"<HXExceptionGuard>:%@", exception.name] reason:customReason userInfo:exception.userInfo];
     
     if ([self.delegate respondsToSelector:@selector(handleExcepton:)]) {
         [self.delegate handleExcepton:customException];
@@ -58,35 +58,35 @@
     }
 }
 
-- (void)startCrashExcptionWithExceptionType:(HXCrashExceptionType)exceptionType {
+- (void)startExceptionGuardWithGuardType:(HXExceptionGuardType)guardType {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        if (exceptionType & HXCrashExceptionTypeContainer) {
-            [NSArray hx_systemMethodExchangeForCrashProtection];
-            [NSMutableArray hx_systemMethodExchangeForCrashProtection];
+        if (guardType & HXExceptionGuardTypeContainer) {
+            [NSArray hx_systemMethodExchangeForException];
+            [NSMutableArray hx_systemMethodExchangeForException];
             
-            [NSDictionary hx_systemMethodExchangeForCrashProtection];
-            [NSMutableDictionary hx_systemMethodExchangeForCrashProtection];
+            [NSDictionary hx_systemMethodExchangeForException];
+            [NSMutableDictionary hx_systemMethodExchangeForException];
         }
         
-        if (exceptionType & HXCrashExceptionTypeString) {
-            [NSString hx_systemMethodExchangeForCrashProtection];
-            [NSMutableString hx_systemMethodExchangeForCrashProtection];
-            [NSAttributedString hx_systemMethodExchangeForCrashProtection];
-            [NSMutableAttributedString hx_systemMethodExchangeForCrashProtection];
+        if (guardType & HXExceptionGuardTypeString) {
+            [NSString hx_systemMethodExchangeForException];
+            [NSMutableString hx_systemMethodExchangeForException];
+            [NSAttributedString hx_systemMethodExchangeForException];
+            [NSMutableAttributedString hx_systemMethodExchangeForException];
         }
         
-        if (exceptionType & HXCrashExceptionTypeTimer) {
-            [NSTimer hx_systemMethodExchangeForCrashProtection];
+        if (guardType & HXExceptionGuardTypeTimer) {
+            [NSTimer hx_systemMethodExchangeForException];
         }
         
-        if (exceptionType & HXCrashExceptionTypeNull) {
-            [NSNull hx_systemMethodExchangeForCrashProtection];
+        if (guardType & HXExceptionGuardTypeNull) {
+            [NSNull hx_systemMethodExchangeForException];
         }
         
-        if (exceptionType & HXCrashExceptionTypeNotification) {
-            [NSNotificationCenter hx_systemMethodExchangeForCrashProtection];
+        if (guardType & HXExceptionGuardTypeNotification) {
+            [NSNotificationCenter hx_systemMethodExchangeForException];
         }
         
         

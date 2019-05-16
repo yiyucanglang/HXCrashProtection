@@ -8,7 +8,7 @@
 
 #import "NSMutableArray+HXCPArray.h"
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @implementation NSMutableArray (HXCPArray)
 #pragma mark - Life Cycle
@@ -16,7 +16,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class arrayMClass = NSClassFromString(@"__NSArrayM");
@@ -32,7 +32,7 @@
                     object = RSSWCallOriginal(index);
                 }
                 @catch (NSException *exception) {
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     return object;
@@ -50,7 +50,7 @@
                     RSSWCallOriginal(index);
                 }
                 @catch (NSException *exception) {
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     
@@ -68,7 +68,7 @@
                     RSSWCallOriginal(object, index);
                 }
                 @catch (NSException *exception) {
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     

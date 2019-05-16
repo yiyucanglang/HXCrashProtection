@@ -9,7 +9,7 @@
 #import "NSMutableString+HXCPString.h"
 
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @implementation NSMutableString (HXCPString)
 #pragma mark - Life Cycle
@@ -17,7 +17,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class stringClass = NSClassFromString(@"__NSCFString");
@@ -32,13 +32,33 @@
                 }
                 @catch (NSException *exception) {
                     
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     
                 }
             }), 0, NULL);
         }
+        
+        
+        sel       = @selector(replaceOccurrencesOfString:withString:options:range:);
+        method = class_getInstanceMethod(stringClass, sel);
+        if(NULL != method) {
+            RSSwizzleInstanceMethod(stringClass, sel, RSSWReturnType(NSUInteger), RSSWArguments(NSString *target, NSString *replacement, NSStringCompareOptions options, NSRange searchRange), RSSWReplacement( {
+                NSUInteger returnValue = 0;
+                @try {
+                   returnValue = RSSWCallOriginal(target, replacement, options, searchRange);
+                }
+                @catch (NSException *exception) {
+                    returnValue = 0;
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
+                }
+                @finally {
+                    return returnValue;
+                }
+            }), 0, NULL);
+        }
+        
         
         
         sel       = @selector(insertString:atIndex:);
@@ -51,7 +71,7 @@
                 }
                 @catch (NSException *exception) {
                     
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     
@@ -70,7 +90,7 @@
                 }
                 @catch (NSException *exception) {
                     
-                    [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                    [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 }
                 @finally {
                     

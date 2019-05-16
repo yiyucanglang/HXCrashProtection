@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name             = 'HXCrashProtection'
-  s.version          = '0.0.1'
-  s.summary          = '基础防护常用系统类使用崩溃'
+  s.name             = 'HXExceptionGuard'
+  s.version          = '0.0.2'
+  s.summary          = '常用系统类使用崩溃基础防护组件'
 
   s.homepage         = 'https://github.com/yiyucanglang'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

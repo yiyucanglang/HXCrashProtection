@@ -9,7 +9,7 @@
 #import "NSTimer+HXCPTimer.h"
 
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @interface HXNSTimerIntercepter : NSObject
 @property (nonatomic, weak)     id  target;
@@ -37,7 +37,7 @@
         NSString *reason = [NSString stringWithFormat:@"%@(timer method:%@) forget to release timer when dealloc ", self.targerClassName, NSStringFromSelector(self.aSelector)];
         
         NSException *exception = [NSException exceptionWithName:@"The timer did not release correctly" reason:reason userInfo:nil];
-        [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+        [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
     }
 }
 
@@ -69,7 +69,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         

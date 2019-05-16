@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "HXCrashProtectionProtocol.h"
+#import "HXExceptionGuardProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSNotificationCenter (HXCPNotificationCenter)<HXCrashProtectionProtocol>
+@interface NSNotificationCenter (HXCPNotificationCenter)<HXExceptionGuardProtocol>
 
 @end
 

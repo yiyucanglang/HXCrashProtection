@@ -9,7 +9,7 @@
 #import "NSNull+HXCPNull.h"
 
 #import "RSSwizzle.h"
-#import "HXExceptionHandler.h"
+#import "HXExceptionGuarder.h"
 
 @implementation NSNull (HXCPNull)
 #pragma mark - Life Cycle
@@ -17,7 +17,7 @@
 #pragma mark - System Method
 
 #pragma mark - Public Method
-+ (void)hx_systemMethodExchangeForCrashProtection {
++ (void)hx_systemMethodExchangeForException {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
@@ -39,7 +39,7 @@
                 
                 NSException *exception = [NSException exceptionWithName:@"Null object appear" reason:@"maybe error raise when convert" userInfo:nil];
                 
-                [[HXExceptionHandler exceptionManager] handleExcepton:exception];
+                [[HXExceptionGuarder exceptionGuarder] handleExcepton:exception];
                 
                 for (id tmpObj in sTmpOutput) {
                     if ([tmpObj respondsToSelector:aSelector]) {
